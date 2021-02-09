@@ -1,13 +1,13 @@
 import c from './Post.module.css';
 
-const Post = () => {
+const Post = (props) => {
     return (
         <div>
             <div className={c.item}>
-                Post 1
-          </div>
+                { props.message }
+            </div>
             <div>
-                <span>like</span>
+                <span>like {props.likeCount}</span>
             </div>
         </div>
     )

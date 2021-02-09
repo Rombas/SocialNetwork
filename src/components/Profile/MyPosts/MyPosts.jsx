@@ -5,9 +5,8 @@ const MyPosts = () => {
     return (
         <div>
             My posts
-            <Post />
-            <Post />
-            <Post />
+            <Post message='Hi, how are you?' likeCount='15'/>
+            <Post message='It is my first post' likeCount='20' />
         </div>
     )
 };
