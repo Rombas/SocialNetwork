@@ -1,3 +1,5 @@
+import {rerenderEntirePage} from "../render";
+
 let state;
 state = {
     dialogsPage: {
@@ -59,6 +61,16 @@ state = {
             }
         ]
     }
+};
+
+export const addPost = (text) => {
+    const newPost = {
+        id: 5,
+        message: text,
+        likesCount: 0
+    }
+    state.profilePage.posts.push(newPost);
+    rerenderEntirePage(state);
 };
 
 export default state;
