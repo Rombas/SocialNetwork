@@ -1,4 +1,4 @@
-import {rerenderEntirePage} from "../render";
+let rerenderEntirePage;
 
 let state;
 state = {
@@ -94,6 +94,10 @@ export const addMessage = () => {
 export const updateMessageArea = (text) => {
     state.dialogsPage.newMessageText = text;
     rerenderEntirePage(state);
+}
+
+export const subscribe = (observer) => {
+    rerenderEntirePage = observer;
 }
 
 export default state;
