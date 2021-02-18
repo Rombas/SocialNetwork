@@ -3,6 +3,7 @@ import {rerenderEntirePage} from "../render";
 let state;
 state = {
     dialogsPage: {
+        newMessageText: 'enter',
         messages: [
             {id: 1, message: 'Hi'},
             {id: 2, message: 'Hello'},
@@ -41,6 +42,7 @@ state = {
         ]
     },
     profilePage: {
+        newPostText: 'enter',
         posts: [
             {id: 1, message: 'Hi, how are you?', likesCount: 12},
             {id: 2, message: 'It is my first posts', likesCount: 20},
@@ -63,14 +65,35 @@ state = {
     }
 };
 
-export const addPost = (text) => {
+export const addPost = () => {
     const newPost = {
         id: 5,
-        message: text,
+        message: state.profilePage.newPostText,
         likesCount: 0
     }
     state.profilePage.posts.push(newPost);
+    state.profilePage.newPostText = '';
     rerenderEntirePage(state);
 };
+
+export const updateTextArea = (text) => {
+    state.profilePage.newPostText = text;
+    rerenderEntirePage(state);
+}
+
+export const addMessage = () => {
+    const newMessage = {
+        id: 7,
+        message: state.dialogsPage.newMessageText
+    }
+    state.dialogsPage.messages.push(newMessage);
+    state.dialogsPage.newMessageText = '';
+    rerenderEntirePage(state);
+};
+
+export const updateMessageArea = (text) => {
+    state.dialogsPage.newMessageText = text;
+    rerenderEntirePage(state);
+}
 
 export default state;
