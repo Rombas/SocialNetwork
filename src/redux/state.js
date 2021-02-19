@@ -65,39 +65,38 @@ state = {
     }
 };
 
-export const addPost = () => {
-    const newPost = {
-        id: 5,
-        message: state.profilePage.newPostText,
-        likesCount: 0
+export let store;
+store = {
+    addPost() {
+        const newPost = {
+            id: 5,
+            message: state.profilePage.newPostText,
+            likesCount: 0
+        }
+        state.profilePage.posts.push(newPost);
+        state.profilePage.newPostText = '';
+        rerenderEntirePage(state);
+    },
+    updateTextArea(text) {
+        state.profilePage.newPostText = text;
+        rerenderEntirePage(state);
+    },
+    addMessage() {
+        const newMessage = {
+            id: 7,
+            message: state.dialogsPage.newMessageText
+        }
+        state.dialogsPage.messages.push(newMessage);
+        state.dialogsPage.newMessageText = '';
+        rerenderEntirePage(state);
+    },
+    updateMessageArea(text) {
+        state.dialogsPage.newMessageText = text;
+        rerenderEntirePage(state);
+    },
+    subscribe(observer) {
+        rerenderEntirePage = observer;
     }
-    state.profilePage.posts.push(newPost);
-    state.profilePage.newPostText = '';
-    rerenderEntirePage(state);
-};
-
-export const updateTextArea = (text) => {
-    state.profilePage.newPostText = text;
-    rerenderEntirePage(state);
-}
-
-export const addMessage = () => {
-    const newMessage = {
-        id: 7,
-        message: state.dialogsPage.newMessageText
-    }
-    state.dialogsPage.messages.push(newMessage);
-    state.dialogsPage.newMessageText = '';
-    rerenderEntirePage(state);
-};
-
-export const updateMessageArea = (text) => {
-    state.dialogsPage.newMessageText = text;
-    rerenderEntirePage(state);
-}
-
-export const subscribe = (observer) => {
-    rerenderEntirePage = observer;
 }
 
 export default state;

@@ -1,20 +1,16 @@
 import './index.css';
-import state, {subscribe} from "./redux/state";
+import state, {store} from "./redux/state";
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import {addMessage, addPost, updateMessageArea, updateTextArea} from "./redux/state";
 
 const rerenderEntirePage = (state) => {
     ReactDOM.render(
         <React.StrictMode>
             <App
                 state={state}
-                addPost={addPost}
-                updateTextArea={updateTextArea}
-                addMessage={addMessage}
-                updateMessageArea={updateMessageArea}
+                store={store}
             />
         </React.StrictMode>,
         document.getElementById('root')
@@ -22,4 +18,4 @@ const rerenderEntirePage = (state) => {
 }
 
 rerenderEntirePage(state);
-subscribe(rerenderEntirePage);
+store.subscribe(rerenderEntirePage);
