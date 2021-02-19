@@ -1,3 +1,5 @@
+import {act} from "@testing-library/react";
+
 export let store;
 store = {
     _state: {
@@ -17,7 +19,11 @@ store = {
                     name: 'Dimych',
                     avatar: 'https://vokrug-tv.ru/pic/person/5/5/3/4/5534779888fe3ee25eb750183028cecf.jpeg'
                 },
-                {id: 2, name: 'Sveta', avatar: 'https://drivemusic.club/uploads/artists_images/artists_250/sveta_5.jpg'},
+                {
+                    id: 2,
+                    name: 'Sveta',
+                    avatar: 'https://drivemusic.club/uploads/artists_images/artists_250/sveta_5.jpg'
+                },
                 {
                     id: 3,
                     name: 'Sasha',
@@ -54,7 +60,11 @@ store = {
                     name: 'Dimych',
                     avatar: 'https://vokrug-tv.ru/pic/person/5/5/3/4/5534779888fe3ee25eb750183028cecf.jpeg'
                 },
-                {id: 2, name: 'Sveta', avatar: 'https://drivemusic.club/uploads/artists_images/artists_250/sveta_5.jpg'},
+                {
+                    id: 2,
+                    name: 'Sveta',
+                    avatar: 'https://drivemusic.club/uploads/artists_images/artists_250/sveta_5.jpg'
+                },
                 {
                     id: 3,
                     name: 'Sasha',
@@ -63,42 +73,42 @@ store = {
             ]
         }
     },
-    getState(){
-        return this._state;
-    },
-    _rerenderEntirePage(){
+    _rerenderEntirePage() {
 
     },
-    addPost() {
-        const newPost = {
-            id: 5,
-            message: this._state.profilePage.newPostText,
-            likesCount: 0
-        }
-        this._state.profilePage.posts.push(newPost);
-        this._state.profilePage.newPostText = '';
-        this._rerenderEntirePage(store._state);
-    },
-    updateTextArea(text) {
-        this._state.profilePage.newPostText = text;
-        this._rerenderEntirePage(store._state);
-    },
-    addMessage() {
-        const newMessage = {
-            id: 7,
-            message: this._state.dialogsPage.newMessageText
-        }
-        this._state.dialogsPage.messages.push(newMessage);
-        this._state.dialogsPage.newMessageText = '';
-        this._rerenderEntirePage(this._state);
-    },
-    updateMessageArea(text) {
-        this._state.dialogsPage.newMessageText = text;
-        this._rerenderEntirePage(this._state);
+    getState() {
+        return this._state;
     },
     subscribe(observer) {
         this._rerenderEntirePage = observer;
-    }
+    },
+    dispatch(action) {
+        if (action.type === 'ADD-POST') {
+            const newPost = {
+                id: 5,
+                message: this._state.profilePage.newPostText,
+                likesCount: 0
+            }
+            this._state.profilePage.posts.push(newPost);
+            this._state.profilePage.newPostText = '';
+            this._rerenderEntirePage(store._state);
+        } else if (action.type === 'UPDATE-TEXT-AREA') {
+            this._state.profilePage.newPostText = action.newText;
+            this._rerenderEntirePage(store._state);
+        } else if (action.type === 'ADD-MESSAGE') {
+            const newMessage = {
+                id: 7,
+                message: this._state.dialogsPage.newMessageText
+            }
+            this._state.dialogsPage.messages.push(newMessage);
+            this._state.dialogsPage.newMessageText = '';
+            this._rerenderEntirePage(this._state);
+        } else if (action.type === 'UPDATE-MESSAGE-AREA') {
+            this._state.dialogsPage.newMessageText = action.newText;
+            this._rerenderEntirePage(this._state);
+        }
+    },
+
 }
 
 export default store;

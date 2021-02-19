@@ -3,13 +3,17 @@ import Post from './Post/Post';
 import React from "react";
 
 const MyPosts = (props) => {
-
+    debugger;
     const postsElements = props.posts.map(p => <Post message={p.message} likeCount={p.likesCount}/>)
     let newPostText = React.createRef();
 
+    const addPost = () => {
+        props.dispatch({type:'ADD-POST'})
+    }
+
     const updateTextArea = () => {
         let postText = newPostText.current.value;
-        props.updateTextArea(postText);
+        props.dispatch({type:'UPDATE-TEXT-AREA', newText: postText});
     }
 
     return (
@@ -19,7 +23,7 @@ const MyPosts = (props) => {
                 <textarea onChange={updateTextArea} ref={newPostText} value={props.newPostText}/>
             </div>
             <div>
-                <button onClick={props.addPost}>Add post
+                <button onClick={addPost}>Add post
                 </button>
             </div>
             <div>
