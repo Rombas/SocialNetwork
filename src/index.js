@@ -1,5 +1,5 @@
 import './index.css';
-import state, {store} from "./redux/state";
+import store from "./redux/state";
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
@@ -17,5 +17,5 @@ const rerenderEntirePage = (state) => {
     );
 }
 
-rerenderEntirePage(state);
+rerenderEntirePage(store.getState());
 store.subscribe(rerenderEntirePage);
