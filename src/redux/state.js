@@ -1,4 +1,8 @@
-import {act} from "@testing-library/react";
+
+const ADD_POST = 'ADD-POST';
+const UPDATE_TEXT_AREA = 'UPDATE-TEXT-AREA';
+const ADD_MESSAGE = 'ADD-MESSAGE';
+const UPDATE_MESSAGE_AREA = 'UPDATE-MESSAGE-AREA';
 
 export let store;
 store = {
@@ -110,5 +114,12 @@ store = {
     },
 
 }
+
+export const addMessageActionCreator = () => ({type:ADD_MESSAGE});
+export const updateMessageAreaActionCreator = (newMessage) =>
+    ({type:UPDATE_MESSAGE_AREA, newText:newMessage});
+export const  addPostActionCreator = () => ({type:ADD_POST});
+export const updateTextAreaActionCreator = (postText) =>
+    ({type:UPDATE_TEXT_AREA, newText: postText});
 
 export default store;
