@@ -1,8 +1,6 @@
-
-const ADD_POST = 'ADD-POST';
-const UPDATE_TEXT_AREA = 'UPDATE-TEXT-AREA';
-const ADD_MESSAGE = 'ADD-MESSAGE';
-const UPDATE_MESSAGE_AREA = 'UPDATE-MESSAGE-AREA';
+import dialogsReducer from "./dialog-reducer";
+import profileReducer from "./profile-reducer";
+import navbarReducer from "./navbar-reducer";
 
 export let store;
 store = {
@@ -87,39 +85,13 @@ store = {
         this._rerenderEntirePage = observer;
     },
     dispatch(action) {
-        if (action.type === 'ADD-POST') {
-            const newPost = {
-                id: 5,
-                message: this._state.profilePage.newPostText,
-                likesCount: 0
-            }
-            this._state.profilePage.posts.push(newPost);
-            this._state.profilePage.newPostText = '';
-            this._rerenderEntirePage(store._state);
-        } else if (action.type === 'UPDATE-TEXT-AREA') {
-            this._state.profilePage.newPostText = action.newText;
-            this._rerenderEntirePage(store._state);
-        } else if (action.type === 'ADD-MESSAGE') {
-            const newMessage = {
-                id: 7,
-                message: this._state.dialogsPage.newMessageText
-            }
-            this._state.dialogsPage.messages.push(newMessage);
-            this._state.dialogsPage.newMessageText = '';
-            this._rerenderEntirePage(this._state);
-        } else if (action.type === 'UPDATE-MESSAGE-AREA') {
-            this._state.dialogsPage.newMessageText = action.newText;
-            this._rerenderEntirePage(this._state);
-        }
-    },
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
+        this._state.profilePage = profileReducer(this._state.profilePage, action);
+        this._state.navbar = navbarReducer(this._state.navbar, action);
+        this._rerenderEntirePage(this._state);
 
+    }
 }
 
-export const addMessageActionCreator = () => ({type:ADD_MESSAGE});
-export const updateMessageAreaActionCreator = (newMessage) =>
-    ({type:UPDATE_MESSAGE_AREA, newText:newMessage});
-export const  addPostActionCreator = () => ({type:ADD_POST});
-export const updateTextAreaActionCreator = (postText) =>
-    ({type:UPDATE_TEXT_AREA, newText: postText});
 
 export default store;
