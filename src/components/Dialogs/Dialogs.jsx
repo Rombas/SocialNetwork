@@ -6,15 +6,15 @@ import {addMessageActionCreator, updateMessageAreaActionCreator} from "../../red
 
 const Dialogs = (props) => {
 
-    const dialogItems = props.state.dialogs.map(item => <DialogItem avatar={item.avatar} name={item.name} id={item.id}/>);
-    const messagesItems = props.state.messages.map(item => <Message message={item.message} id={item.id}/>);
+    const dialogItems = props.dialogs.map(item => <DialogItem avatar={item.avatar} name={item.name} id={item.id}/>);
+    const messagesItems = props.messages.map(item => <Message message={item.message} id={item.id}/>);
     let newMessage = React.createRef();
     const addMessage = () => {
-        props.dispatch(addMessageActionCreator());
+        props.addMessageAction();
     }
 
     const updateMessageArea = () => {
-        props.dispatch(updateMessageAreaActionCreator(newMessage.current.value));
+        props.updateMessageAreaAction(newMessage.current.value);
     }
 
     return (
@@ -25,7 +25,7 @@ const Dialogs = (props) => {
             <div className={s.messages}>
                 {messagesItems}
                 <div>
-                    <textarea onChange={updateMessageArea} ref={newMessage} value={props.state.newMessageText}></textarea>
+                    <textarea onChange={updateMessageArea} ref={newMessage} value={props.newMessageText}></textarea>
                 </div>
                 <div>
                     <button onClick={addMessage}>Send Message
