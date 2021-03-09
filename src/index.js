@@ -4,21 +4,21 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import {Provider} from "react-redux";
 
 const rerenderEntirePage = (state) => {
     ReactDOM.render(
         <React.StrictMode>
-            <App
-                state={state}
-                store={store}
-            />
+            <Provider store={store}>
+                <App />
+            </Provider>
         </React.StrictMode>,
         document.getElementById('root')
     );
 }
 
 rerenderEntirePage(store.getState());
-store.subscribe(()=>{
+store.subscribe(() => {
     let state = store.getState();
     rerenderEntirePage(state);
 });
