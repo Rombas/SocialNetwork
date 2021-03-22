@@ -1,34 +1,12 @@
 import React from "react";
 import styles from './Users.module.css';
+import * as axios from 'axios'
+import userPhoto from "../../assets/images/images.png"
 
 const Users = (props) => {
     if (props.users.length === 0) {
-        props.setUsers(
-            [{
-                id: 1,
-                photoUrl: 'https://www.vokrug.tv/pic/person/e/b/f/1/ebf14965f14a2a2bf01dbc0e34d5f3b6.jpg',
-                fullName: 'Roman B',
-                status: 'Hey you',
-                isFollowed: true,
-                location: {city: 'Bobruisk', country: 'Belarus'}
-            },
-                {
-                    id: 2,
-                    photoUrl: 'https://www.vokrug.tv/pic/person/e/b/f/1/ebf14965f14a2a2bf01dbc0e34d5f3b6.jpg',
-                    fullName: 'Dimych D',
-                    status: 'Boss',
-                    isFollowed: false,
-                    location: {city: 'Minsk', country: 'Belarus'}
-                },
-                {
-                    id: 3,
-                    photoUrl: 'https://www.vokrug.tv/pic/person/e/b/f/1/ebf14965f14a2a2bf01dbc0e34d5f3b6.jpg',
-                    fullName: 'Piotr B',
-                    status: 'BIG Boss',
-                    isFollowed: true,
-                    location: {city: 'All over the World', country: 'Belarus'}
-                }]
-        )
+        axios.get("https://social-network.samuraijs.com/api/1.0/users").then((response) =>
+            props.setUsers(response.data.items));
     }
     return (
         <div>
@@ -36,14 +14,14 @@ const Users = (props) => {
                 props.users.map((user) => {
                     return <div key={user.id}>
                         <span>
-                            <img src={user.photoUrl} className={styles.photo}/>
+                            <img src={user.photos.small != null ? user.photos.small : userPhoto} className={styles.photo}/>
                             {(user.isFollowed) ? <button onClick={() => props.unfollow(user.id)}> Unfollow </button> :
                                 <button onClick={() => props.follow(user.id)}> Follow </button>}
                         </span>
                         <span>
                             <span>
                                 <div>
-                                    {user.fullName}
+                                    {user.name}
                                 </div>
                                 <div>
                                     {user.status}
@@ -51,10 +29,10 @@ const Users = (props) => {
                             </span>
                             <span>
                                 <div>
-                                    {user.location.city}
+                                    {"user.location.city"}
                                 </div>
                                 <div>
-                                    {user.location.country}
+                                    {"user.location.country"}
                             </div>
                             </span>
                         </span>
