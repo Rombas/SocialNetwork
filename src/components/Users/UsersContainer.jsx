@@ -2,12 +2,12 @@ import React from "react";
 import Users from "./Users";
 import {connect} from "react-redux";
 import {
-    followAC,
-    setCurrentPageAC,
-    setUsersAC,
-    setUsersCountAC,
-    toggleIsFetchingAC,
-    unfollowAC
+    follow,
+    setCurrentPage,
+    setUsers,
+    setUsersCount,
+    toggleIsFetching,
+    unfollow
 } from "../../redux/users-reducer";
 import * as axios from "axios";
 import preloader from '../../assets/images/grid.svg'
@@ -62,30 +62,14 @@ const mapStateToProps = (state) => {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        follow: (usersID) => {
-            dispatch(followAC(usersID))
-        },
-        unfollow: (usersID) => {
-            dispatch(unfollowAC(usersID))
-        },
-        setUsers: (users) => {
-            dispatch(setUsersAC(users))
-        },
-        setCurrentPage: (page) => {
-            dispatch(setCurrentPageAC(page))
-        },
-        setUsersCount: (count) => {
-            dispatch(setUsersCountAC(count))
-        },
-        toggleIsFetching: (isFetching) => {
-            dispatch(toggleIsFetchingAC(isFetching))
-        }
 
-    }
-}
-
-const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(UsersClassContainer);
+const UsersContainer = connect(mapStateToProps, {
+    follow,
+    setCurrentPage,
+    setUsers,
+    setUsersCount,
+    toggleIsFetching,
+    unfollow
+})(UsersClassContainer);
 
 export default UsersContainer;
