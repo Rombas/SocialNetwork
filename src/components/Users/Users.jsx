@@ -35,7 +35,8 @@ let Users = (props) => {
                                      className={styles.photo}/>
                             </NavLink>
                             {(user.followed) ?
-                                <button onClick={() => {
+                                <button disabled={props.followingToggleList.some(id => id === user.id)} onClick={() => {
+                                    props.toggleIsFollowing(true, user.id);
                                     axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${user.id}`,
                                         {
                                             withCredentials: true,
@@ -44,9 +45,11 @@ let Users = (props) => {
                                         if (response.data.resultCode == 0) {
                                             props.unfollow(user.id);
                                         }
+                                        props.toggleIsFollowing(false, user.id);
                                     });
                                 }}> Unfollow </button> :
-                                <button onClick={() => {
+                                <button disabled={props.followingToggleList.some(id => id === user.id)} onClick={() => {
+                                    props.toggleIsFollowing(true, user.id);
                                     axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${user.id}`, {},
                                         {
                                             withCredentials: true,
@@ -55,6 +58,7 @@ let Users = (props) => {
                                         if (response.data.resultCode == 0) {
                                             props.follow(user.id)
                                         }
+                                        props.toggleIsFollowing(false, user.id);
                                     });
                                 }}> Follow </button>}
                                 </span>
