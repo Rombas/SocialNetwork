@@ -12,29 +12,24 @@ import {
 import * as axios from "axios";
 import preloader from '../../assets/images/grid.svg'
 import Preloader from "../common/Preloader/Preloader";
+import {userAPI} from "../../api/api";
 
 class UsersClassContainer extends React.Component {
 
     componentDidMount() {
         this.props.toggleIsFetching(true);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}`,
-            {
-                withCredentials: true
-            }).then((response) => {
+        userAPI.getUsers(this.props.pageSize).then((data) => {
             this.props.toggleIsFetching(false);
-            this.props.setUsers(response.data.items);
-            this.props.setUsersCount(response.data.totalCount);
+            this.props.setUsers(data.items);
+            this.props.setUsersCount(data.totalCount);
         });
     }
 
     getUsers = (page) => {
         this.props.toggleIsFetching(true);
         this.props.setCurrentPage(page);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${page}`,
-            {
-                withCredentials: true
-            }).then((response) => {
-            this.props.setUsers(response.data.items);
+        userAPI.getUsers(this.props.pageSize, page).then((data) => {
+            this.props.setUsers(data.items);
             this.props.toggleIsFetching(false);
         });
 
