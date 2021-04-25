@@ -17,7 +17,10 @@ class UsersClassContainer extends React.Component {
 
     componentDidMount() {
         this.props.toggleIsFetching(true);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}`).then((response) => {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}`,
+            {
+                withCredentials: true
+            }).then((response) => {
             this.props.toggleIsFetching(false);
             this.props.setUsers(response.data.items);
             this.props.setUsersCount(response.data.totalCount);
@@ -27,7 +30,10 @@ class UsersClassContainer extends React.Component {
     getUsers = (page) => {
         this.props.toggleIsFetching(true);
         this.props.setCurrentPage(page);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${page}`).then((response) => {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${page}`,
+            {
+                withCredentials: true
+            }).then((response) => {
             this.props.setUsers(response.data.items);
             this.props.toggleIsFetching(false);
         });
@@ -37,7 +43,7 @@ class UsersClassContainer extends React.Component {
 
     render() {
         return <>
-            {this.props.isFetching ? <Preloader /> : null}
+            {this.props.isFetching ? <Preloader/> : null}
             <Users
                 usersCount={this.props.usersCount}
                 pageSize={this.props.pageSize}
