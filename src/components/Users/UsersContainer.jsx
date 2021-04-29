@@ -2,40 +2,20 @@ import React from "react";
 import Users from "./Users";
 import {connect} from "react-redux";
 import {
-    follow,
+    follow, getUsers,
     setCurrentPage,
     setUsers,
     setUsersCount,
     toggleIsFetching, toggleIsFollowing,
     unfollow
 } from "../../redux/users-reducer";
-import * as axios from "axios";
-import preloader from '../../assets/images/grid.svg'
 import Preloader from "../common/Preloader/Preloader";
-import {userAPI} from "../../api/api";
 
 class UsersClassContainer extends React.Component {
 
     componentDidMount() {
-        this.props.toggleIsFetching(true);
-        userAPI.getUsers(this.props.pageSize).then((data) => {
-            this.props.toggleIsFetching(false);
-            this.props.setUsers(data.items);
-            this.props.setUsersCount(data.totalCount);
-        });
+        this.props.getUsers(this.props.pageSize);
     }
-
-    getUsers = (page) => {
-        this.props.toggleIsFetching(true);
-        this.props.setCurrentPage(page);
-        userAPI.getUsers(this.props.pageSize, page).then((data) => {
-            this.props.setUsers(data.items);
-            this.props.toggleIsFetching(false);
-        });
-
-
-    }
-
     render() {
         return <>
             {this.props.isFetching ? <Preloader/> : null}
@@ -46,7 +26,7 @@ class UsersClassContainer extends React.Component {
                 users={this.props.users}
                 unfollow={this.props.unfollow}
                 follow={this.props.follow}
-                getUsers={this.getUsers}
+                getUsers={this.props.getUsers}
                 toggleIsFollowing={this.props.toggleIsFollowing}
                 followingToggleList={this.props.followingToggleList}
             />
@@ -73,7 +53,8 @@ const UsersContainer = connect(mapStateToProps, {
     setUsersCount,
     toggleIsFetching,
     toggleIsFollowing,
-    unfollow
+    unfollow,
+    getUsers
 })(UsersClassContainer);
 
 export default UsersContainer;

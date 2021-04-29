@@ -8,7 +8,16 @@ const instance = axios.create({
 
 export const userAPI = {
     getUsers(pageSize, page = 1) {
-        return instance.get(`https://social-network.samuraijs.com/api/1.0/users?count=${pageSize}&page=${page}`).then(response => response.data);
+        return instance.get(`users?count=${pageSize}&page=${page}`).then(response => response.data);
+    },
+    unfollow(userId) {
+        return instance.delete(`follow/${userId}`)
+    },
+    follow(userId) {
+        return instance.post(`follow/${userId}`)
     }
 }
+
+
+
 
