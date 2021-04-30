@@ -20,14 +20,14 @@ class ProfileClassContainer extends React.Component {
         if (!this.props.profile) {
             return <Preloader/>
         }
-        return <Profile profile={this.props.profile}/>
+        return <Profile profile={this.props.profile} isAuth={this.props.isAuth}/>
     }
 }
 
 const mapStateToProps = (state) => {
     return {
         profile: state.profilePage.profile,
-
+        isAuth: state.auth.isAuth
     }
 }
 
