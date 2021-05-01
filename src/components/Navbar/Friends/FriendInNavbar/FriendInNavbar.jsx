@@ -4,7 +4,7 @@ import s from './../Friends.module.css'
 const FriendInNavbar = (props) => {
     return (
         <span>
-            <img className={s.avatar} src={props.avatar} />
+            <img className={s.avatar} src={props.avatar} alt={'avatar'}/>
             <span>{props.name}</span>
         </span>
     )

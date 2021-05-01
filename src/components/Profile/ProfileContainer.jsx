@@ -1,11 +1,10 @@
 import React from "react";
 import Profile from "./Profile";
-import * as axios from "axios";
 import {connect} from "react-redux";
 import {getUserProfile} from "../../redux/profile-reducer";
 import Preloader from "../common/Preloader/Preloader";
 import {withRouter} from "react-router-dom";
-import {userAPI} from "../../api/api";
+import withAuthRedirect from "../../hoc/withAuthRedirect";
 
 class ProfileClassContainer extends React.Component {
     componentDidMount() {
@@ -31,6 +30,6 @@ const mapStateToProps = (state) => {
     }
 }
 
-const ProfileContainer = connect(mapStateToProps, {getUserProfile})(withRouter(ProfileClassContainer));
+const ProfileContainer = withAuthRedirect(connect(mapStateToProps, {getUserProfile})(withRouter(ProfileClassContainer)));
 
 export default ProfileContainer;

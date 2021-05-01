@@ -2,9 +2,6 @@ import React from "react";
 import styles from './Users.module.css';
 import userPhoto from "../../assets/images/images.png"
 import {NavLink} from "react-router-dom";
-import * as axios from "axios";
-import {userAPI} from "../../api/api";
-
 
 let Users = (props) => {
     let pagesCount = Math.ceil(props.usersCount / props.pageSize)
@@ -33,7 +30,7 @@ let Users = (props) => {
                         <span>
                             <NavLink to={'profile/' + user.id}>
                                 <img src={user.photos.small != null ? user.photos.small : userPhoto}
-                                     className={styles.photo}/>
+                                     className={styles.photo} alt={'avatar'}/>
                             </NavLink>
                             {(user.followed) ?
                                 <button disabled={props.followingToggleList.some(id => id === user.id)} onClick={() => {
