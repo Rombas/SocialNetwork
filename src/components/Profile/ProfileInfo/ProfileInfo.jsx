@@ -5,7 +5,7 @@ const ProfileInfo = (props) => {
         <div>
             <div>{props.profile.fullName}</div>
             <img src={props.profile.photos.small} alt={'small avatar'}/>
-            <ProfileStatus status={'test'}/>
+            <ProfileStatus status={props.status}/>
         </div>
 
     )

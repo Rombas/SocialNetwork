@@ -11,19 +11,42 @@ export const userAPI = {
         return instance.get(`users?count=${pageSize}&page=${page}`).then(response => response.data);
     },
     unfollow(userId) {
+        window.alert('Outdated method, please use followAPI');
+        return followAPI.unfollow(userId);
+    },
+    follow(userId) {
+        window.alert('Outdated method, please use followAPI');
+        return followAPI.follow(userId);
+    },
+    getProfile(userId) {
+        window.alert('Outdated method, please use profileAPI');
+        return profileAPI.getProfile(userId);
+    },
+    me() {
+        return instance.get(`auth/me`);
+    }
+}
+
+export const followAPI = {
+    unfollow(userId) {
         return instance.delete(`follow/${userId}`);
     },
     follow(userId) {
         return instance.post(`follow/${userId}`);
-    },
-    getProfile(userId){
-        return instance.get(`profile/${userId}`);
-    },
-    me(){
-      return  instance.get(`auth/me`);
     }
 }
 
+export const profileAPI = {
+    getProfile(userId) {
+        return instance.get(`profile/${userId}`);
+    },
+    setProfileStatus(statusMessage) {
+        return instance.put(`/profile/status`, {status: statusMessage})
+    },
+    getProfileStatus(userId) {
+        return instance.get(`/profile/status/${userId}`);
+    }
+}
 
 
 

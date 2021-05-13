@@ -1,8 +1,10 @@
-import {userAPI} from "../api/api";
+import {profileAPI, userAPI} from "../api/api";
 
 const ADD_POST = 'ADD-POST';
 const UPDATE_TEXT_AREA = 'UPDATE-TEXT-AREA';
 const SET_USER_PROFILE = 'SET-USER-PROFILE';
+const SET_USER_STATUS = 'SET-USER-STATUS';
+
 
 let initialState = {
     newPostText: 'enter',
@@ -11,6 +13,7 @@ let initialState = {
         {id: 2, message: 'It is my first posts', likesCount: 20},
     ],
     profile: null,
+    status: '',
 
 };
 
@@ -40,6 +43,12 @@ const profileReducer = (state = initialState, action) => {
                 profile: action.profile
             };
         }
+        case SET_USER_STATUS: {
+            return {
+                ...state,
+                status: action.status
+            };
+        }
         default:
             return state;
     }
@@ -47,9 +56,15 @@ const profileReducer = (state = initialState, action) => {
 
 export const addPostAction = () => ({type: ADD_POST});
 export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile});
+export const setUserStatus = (status) => ({type: SET_USER_STATUS, status});
 export const getUserProfile = (userId) => (dispatch) => {
     userAPI.getProfile(userId).then((response) => {
         dispatch(setUserProfile(response.data));
+    });
+}
+export const getUserStatus = (userId) => (dispatch) => {
+    profileAPI.getProfileStatus(userId).then((response) => {
+        dispatch(setUserStatus(response.data));
     });
 }
 export const updateTextAreaAction = (postText) =>
