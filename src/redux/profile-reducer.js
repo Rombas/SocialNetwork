@@ -13,7 +13,7 @@ let initialState = {
         {id: 2, message: 'It is my first posts', likesCount: 20},
     ],
     profile: null,
-    status: '',
+    status: ' ',
 
 };
 
@@ -65,6 +65,11 @@ export const getUserProfile = (userId) => (dispatch) => {
 export const getUserStatus = (userId) => (dispatch) => {
     profileAPI.getProfileStatus(userId).then((response) => {
         dispatch(setUserStatus(response.data));
+    });
+}
+export const updateUserStatus = (statusMessage) => (dispatch) => {
+    profileAPI.setProfileStatus(statusMessage).then((response) => {
+        if (response.data.resultCode === 0) dispatch(setUserStatus(statusMessage));
     });
 }
 export const updateTextAreaAction = (postText) =>
