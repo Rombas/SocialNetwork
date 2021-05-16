@@ -1,4 +1,4 @@
-import {userAPI} from "../api/api";
+import {authAPI, userAPI} from "../api/api";
 
 const SET_LOGIN_INFO = 'SET-LOGIN-INFO';
 
@@ -32,6 +32,13 @@ export const getAuthLoginInfo = () => (dispatch) => {
         if (response.data.resultCode === 0) {
             let {id, email, login} = response.data.data;
             dispatch(setAuthLoginInfo(id, email, login));
+        }
+    });
+}
+export const authMeOnSite = (email, password, rememberMe) => (dispatch) => {
+    authAPI.authLogin(email, password, rememberMe).then((response) => {
+        if (response.data.resultCode === 0) {
+            dispatch(getAuthLoginInfo());
         }
     });
 }
