@@ -1,0 +1,16 @@
+.header {
+    grid-area: h;
+    background-color: greenyellow;
+}
+
+.header img {
+    width: 40px;
+}
+
+.authBar {
+    float: right;
+}
+
+authBar a {
+    color: white;
+}
