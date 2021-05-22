@@ -2,6 +2,7 @@ import React from "react";
 import s from './Dialogs.module.css';
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
+import DialogsBox from "./DialogsBox";
 
 const Dialogs = (props) => {
 
@@ -22,13 +23,7 @@ const Dialogs = (props) => {
             </div>
             <div className={s.messages}>
                 {messagesItems}
-                <div>
-                    <textarea onChange={updateMessageArea} ref={newMessage} value={props.newMessageText}></textarea>
-                </div>
-                <div>
-                    <button onClick={addMessage}>Send Message
-                    </button>
-                </div>
+                <DialogsBox> </DialogsBox>
             </div>
 
         </div>

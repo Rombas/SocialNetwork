@@ -37,8 +37,7 @@ export const getAuthLoginInfo = () => (dispatch) => {
 }
 export const authMeOnSite = (email, password, rememberMe) => (dispatch) => {
     authAPI.authLogin(email, password, rememberMe).then((response) => {
-        if (response.data.resultCode === 0) {
-            dispatch(getAuthLoginInfo());
+        if (response.data.resultCode === 0) {dispatch(getAuthLoginInfo());
         }
     });
 }
