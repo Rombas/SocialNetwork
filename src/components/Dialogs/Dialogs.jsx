@@ -8,14 +8,7 @@ const Dialogs = (props) => {
 
     const dialogItems = props.dialogs.map(item => <DialogItem avatar={item.avatar} name={item.name} id={item.id}/>);
     const messagesItems = props.messages.map(item => <Message message={item.message} id={item.id}/>);
-    let newMessage = React.createRef();
-    const addMessage = () => {
-        props.addMessageAction();
-    }
 
-    const updateMessageArea = () => {
-        props.updateMessageAreaAction(newMessage.current.value);
-    }
     return (
         <div className={s.dialogs}>
             <div className={s.dialogItems}>
@@ -23,7 +16,7 @@ const Dialogs = (props) => {
             </div>
             <div className={s.messages}>
                 {messagesItems}
-                <DialogsBox> </DialogsBox>
+                <DialogsBox addMessage={props.addMessageAction}> </DialogsBox>
             </div>
 
         </div>
