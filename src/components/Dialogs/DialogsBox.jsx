@@ -1,11 +1,14 @@
 import React from "react";
 import s from './Dialogs.module.css';
 import {Field, reduxForm} from "redux-form";
+import {required, Textarea} from "../common/Forms/Forms";
 
 const DialogsForm = (props) => {
     return <form onSubmit={props.handleSubmit}>
         <div>
-            <Field name={'message'} component={'textarea'} placeholder={'enter your message'} type={'text'}/>
+            <Field name={'message'} component={Textarea}
+                   validate={[required]}
+                   placeholder={'enter your message'} type={'text'}/>
         </div>
         <div>
             <button>Send Message</button>
