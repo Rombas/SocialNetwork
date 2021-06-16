@@ -17,8 +17,6 @@ const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 ...action.data,
-                isAuth: true,
-
             }
         }
         default:
@@ -26,12 +24,12 @@ const authReducer = (state = initialState, action) => {
     }
 }
 
-export const setAuthLoginInfo = (id, email, login) => ({type: SET_LOGIN_INFO, data:{id, email, login }});
+export const setAuthLoginInfo = (id, email, login, isAuth) => ({type: SET_LOGIN_INFO, data:{id, email, login, isAuth}});
 export const getAuthLoginInfo = () => (dispatch) => {
     userAPI.me().then((response) => {
         if (response.data.resultCode === 0) {
             let {id, email, login} = response.data.data;
-            dispatch(setAuthLoginInfo(id, email, login));
+            dispatch(setAuthLoginInfo(id, email, login, true));
         }
     });
 }
@@ -42,4 +40,10 @@ export const authMeOnSite = (email, password, rememberMe) => (dispatch) => {
     });
 }
 
+export const disAuthMeOnSite = () => (dispatch) => {
+    authAPI.authLogOut().then((response) => {
+        if (response.data.resultCode === 0) {dispatch(setAuthLoginInfo(null, null, null, false));
+        }
+    });
+}
 export default authReducer;
