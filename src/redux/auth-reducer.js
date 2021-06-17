@@ -1,4 +1,5 @@
 import {authAPI, userAPI} from "../api/api";
+import {stopSubmit} from "redux-form";
 
 const SET_LOGIN_INFO = 'SET-LOGIN-INFO';
 
@@ -36,6 +37,9 @@ export const getAuthLoginInfo = () => (dispatch) => {
 export const authMeOnSite = (email, password, rememberMe) => (dispatch) => {
     authAPI.authLogin(email, password, rememberMe).then((response) => {
         if (response.data.resultCode === 0) {dispatch(getAuthLoginInfo());
+        }
+        else {
+            dispatch(stopSubmit('login',{_error:response.data.messages}))
         }
     });
 }

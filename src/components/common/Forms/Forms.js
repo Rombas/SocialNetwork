@@ -24,7 +24,7 @@ export const Input = ({
                              meta
                          }) => {
     return (<div>
-        <input {...input} className={(meta.touched && meta.error ? styles.error : '')}></input>
+        <input {...input} placeholder={label} type={type} className={(meta.touched && meta.error ? styles.error : '')}></input>
         <div>
             {meta.touched && ((meta.error && <span className={styles.errorText}>{meta.error}</span>))}
         </div>
