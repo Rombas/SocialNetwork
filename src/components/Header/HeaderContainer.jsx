@@ -4,9 +4,6 @@ import {connect} from "react-redux";
 import {disAuthMeOnSite, getAuthLoginInfo} from "../../redux/auth-reducer";
 
 class HeaderContainer extends React.Component {
-    componentDidMount() {
-        this.props.getAuthLoginInfo();
-    }
 
     render() {
         return <Header {...this.props} />

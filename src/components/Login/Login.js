@@ -7,7 +7,6 @@ import {Redirect} from "react-router-dom";
 import styles from "../common/Forms/Forms.module.css"
 
 const LoginForm = (props) => {
-    debugger
     return <form onSubmit={props.handleSubmit}>
         <div>
             <Field name={'email'}
