@@ -10,6 +10,14 @@ import {
     unfollow
 } from "../../redux/users-reducer";
 import Preloader from "../common/Preloader/Preloader";
+import {
+    getCurrentPage,
+    getFollowingToggleList,
+    getIsFetching,
+    getPageSize,
+    getUsersCount,
+    getUsersSelector
+} from "../../redux/users-selectors";
 
 class UsersClassContainer extends React.Component {
 
@@ -37,12 +45,12 @@ class UsersClassContainer extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        users: state.usersPage.users,
-        pageSize: state.usersPage.pageSize,
-        usersCount: state.usersPage.usersCount,
-        currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching,
-        followingToggleList: state.usersPage.followingToggleList,
+        users: getUsersSelector(state),
+        pageSize: getPageSize(state),
+        usersCount: getUsersCount(state),
+        currentPage: getCurrentPage(state),
+        isFetching: getIsFetching(state),
+        followingToggleList: getFollowingToggleList(state),
         isAuth: state.auth.isAuth
     }
 }
