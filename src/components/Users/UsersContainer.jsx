@@ -15,8 +15,7 @@ import {
     getFollowingToggleList,
     getIsFetching,
     getPageSize,
-    getUsersCount,
-    getUsersSelector
+    getUsersCount, getUsersFilter,
 } from "../../redux/users-selectors";
 
 class UsersClassContainer extends React.Component {
@@ -45,7 +44,7 @@ class UsersClassContainer extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        users: getUsersSelector(state),
+        users: getUsersFilter(state),
         pageSize: getPageSize(state),
         usersCount: getUsersCount(state),
         currentPage: getCurrentPage(state),
