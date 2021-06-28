@@ -10,18 +10,6 @@ export const userAPI = {
     getUsers(pageSize, page = 1) {
         return instance.get(`users?count=${pageSize}&page=${page}`).then(response => response.data);
     },
-    unfollow(userId) {
-        window.alert('Outdated method, please use followAPI');
-        return followAPI.unfollow(userId);
-    },
-    follow(userId) {
-        window.alert('Outdated method, please use followAPI');
-        return followAPI.follow(userId);
-    },
-    getProfile(userId) {
-        window.alert('Outdated method, please use profileAPI');
-        return profileAPI.getProfile(userId);
-    },
     me() {
         return instance.get(`auth/me`);
     }

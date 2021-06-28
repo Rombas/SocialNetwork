@@ -1,4 +1,4 @@
-import {userAPI} from "../api/api";
+import {followAPI, userAPI} from "../api/api";
 
 const SET_USERS = 'SET-USERS';
 const FOLLOW = 'FOLLOW';
@@ -100,26 +100,25 @@ export const getUsers = (pageSize, page = 1) => {
         });
     }
 }
+
+const followUnfollowFlow = (dispatch, userId, followUnfollow, actionCreator) => {
+    dispatch(toggleIsFollowing(true, userId));
+    followUnfollow(userId).then((response) => {
+        if (response.data.resultCode === 0) {
+            dispatch(actionCreator(userId));
+        }
+        dispatch(toggleIsFollowing(false, userId));
+    });
+}
+
 export const follow = (userId) => {
     return (dispatch) => {
-        dispatch(toggleIsFollowing(true, userId));
-        userAPI.follow(userId).then((response) => {
-            if (response.data.resultCode === 0) {
-                dispatch(followSuccess(userId));
-            }
-            dispatch(toggleIsFollowing(false, userId));
-        });
+        followUnfollowFlow(dispatch, userId, followAPI.follow, followSuccess)
     }
 }
 export const unfollow = (userId) => {
     return (dispatch) => {
-        dispatch(toggleIsFollowing(true, userId));
-        userAPI.unfollow(userId).then((response) => {
-            if (response.data.resultCode === 0) {
-                dispatch(unfollowSuccess(userId));
-            }
-            dispatch(toggleIsFollowing(false, userId));
-        });
+        followUnfollowFlow(dispatch, userId, followAPI.unfollow, unfollowSuccess)
     }
 }
 

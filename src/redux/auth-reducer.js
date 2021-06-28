@@ -25,29 +25,30 @@ const authReducer = (state = initialState, action) => {
     }
 }
 
-export const setAuthLoginInfo = (id, email, login, isAuth) => ({type: SET_LOGIN_INFO, data:{id, email, login, isAuth}});
-export const getAuthLoginInfo = () => (dispatch) => {
-    userAPI.me().then((response) => {
-        if (response.data.resultCode === 0) {
-            let {id, email, login} = response.data.data;
-            dispatch(setAuthLoginInfo(id, email, login, true));
-        }
-    });
+export const setAuthLoginInfo = (id, email, login, isAuth) => ({
+    type: SET_LOGIN_INFO,
+    data: {id, email, login, isAuth}
+});
+export const getAuthLoginInfo = () => async (dispatch) => {
+    const response = await userAPI.me()
+    if (response.data.resultCode === 0) {
+        let {id, email, login} = response.data.data;
+        dispatch(setAuthLoginInfo(id, email, login, true));
+    }
 }
-export const authMeOnSite = (email, password, rememberMe) => (dispatch) => {
-    authAPI.authLogin(email, password, rememberMe).then((response) => {
-        if (response.data.resultCode === 0) {dispatch(getAuthLoginInfo());
-        }
-        else {
-            dispatch(stopSubmit('login',{_error:response.data.messages}))
-        }
-    });
+export const authMeOnSite = (email, password, rememberMe) => async (dispatch) => {
+    const response = await authAPI.authLogin(email, password, rememberMe)
+    if (response.data.resultCode === 0) {
+        dispatch(getAuthLoginInfo());
+    } else {
+        dispatch(stopSubmit('login', {_error: response.data.messages}))
+    }
 }
 
-export const disAuthMeOnSite = () => (dispatch) => {
-    authAPI.authLogOut().then((response) => {
-        if (response.data.resultCode === 0) {dispatch(setAuthLoginInfo(null, null, null, false));
-        }
-    });
+export const disAuthMeOnSite = () => async (dispatch) => {
+    const response = await authAPI.authLogOut()
+    if (response.data.resultCode === 0) {
+        dispatch(setAuthLoginInfo(null, null, null, false));
+    }
 }
 export default authReducer;

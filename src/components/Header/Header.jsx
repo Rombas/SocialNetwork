@@ -1,5 +1,4 @@
 import cl from './Header.module.css';
-import {disAuthMeOnSite} from "../../redux/auth-reducer";
 
 const Header = (props) => {
     return (

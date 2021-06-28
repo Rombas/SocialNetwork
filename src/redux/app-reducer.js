@@ -1,5 +1,4 @@
-import {authAPI, userAPI} from "../api/api";
-import {stopSubmit} from "redux-form";
+import {userAPI} from "../api/api";
 import {setAuthLoginInfo} from "./auth-reducer";
 
 const SET_INITIALIZED_STATUS = 'SET-INITIALIZED-STATUS';
