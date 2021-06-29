@@ -23,3 +23,6 @@ export const getIsFetching = (state) => {
 export const getFollowingToggleList = (state) => {
     return state.usersPage.followingToggleList
 }
+export const getPortionSize = (state) => {
+    return state.usersPage.portionSize
+}
