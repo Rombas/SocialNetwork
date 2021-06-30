@@ -4,8 +4,7 @@ import {BrowserRouter, Route} from "react-router-dom";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
-import React from "react";
-import DialogsContainer from "./components/Dialogs/DialogsContainer";
+import React, {Suspense} from 'react';
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
@@ -14,22 +13,31 @@ import {connect} from "react-redux";
 import {isInitialized} from "./redux/app-reducer";
 import Preloader from "./components/common/Preloader/Preloader";
 
+const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
+
 class App extends React.Component<{}> {
     componentDidMount() {
         this.props.isInitialized();
     }
 
     render() {
-        if (!this.props.initializedStatus){
-            return <Preloader />
+        if (!this.props.initializedStatus) {
+            return <Preloader/>
         }
         return (
             <BrowserRouter>
                 <div className='app-wrapper'>
                     <HeaderContainer/>
                     <Navbar/>
+
                     <div className='app-wrapper-content'>
-                        <Route path='/dialogs' render={() => <DialogsContainer/>}/>
+                        <Route path='/dialogs' render={() => {
+                            return (
+                                <Suspense fallback={<div>Загрузка...</div>}>
+                                    <DialogsContainer/>
+                                </Suspense>
+                            )
+                        }}/>
                         <Route path='/profile/:userId?' render={() => <ProfileContainer/>}/>
                         <Route path='/users' render={() => <UsersContainer/>}/>
                         <Route path='/news' render={() => <News/>}/>
@@ -37,6 +45,7 @@ class App extends React.Component<{}> {
                         <Route path='/music' render={() => <Music/>}/>
                         <Route path='/settings' render={() => <Settings/>}/>
                     </div>
+
                 </div>
             </BrowserRouter>
         );
@@ -44,7 +53,7 @@ class App extends React.Component<{}> {
 }
 
 const mapStateToProps = (state) => {
-    return{
+    return {
         initializedStatus: state.app.initializedStatus
     }
 }
