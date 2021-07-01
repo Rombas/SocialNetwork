@@ -4,6 +4,8 @@ const ADD_POST = 'ADD-POST';
 const UPDATE_TEXT_AREA = 'UPDATE-TEXT-AREA';
 const SET_USER_PROFILE = 'SET-USER-PROFILE';
 const SET_USER_STATUS = 'SET-USER-STATUS';
+const SET_USER_PHOTOS = 'SET-USER-PHOTOS';
+
 
 
 let initialState = {
@@ -49,6 +51,12 @@ const profileReducer = (state = initialState, action) => {
                 status: action.status
             };
         }
+        case SET_USER_PHOTOS: {
+            return {
+                ...state,
+                profile: {...state.profile, photos:action.photos}
+            };
+        }
         default:
             return state;
     }
@@ -57,6 +65,9 @@ const profileReducer = (state = initialState, action) => {
 export const addPostAction = (postText) => ({type: ADD_POST, postText});
 export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile});
 export const setUserStatus = (status) => ({type: SET_USER_STATUS, status});
+export const setUserPhotos = (photos) => ({type: SET_USER_PHOTOS, photos});
+
+
 export const getUserProfile = (userId) => (dispatch) => {
     profileAPI.getProfile(userId).then((response) => {
         dispatch(setUserProfile(response.data));
@@ -71,6 +82,10 @@ export const updateUserStatus = (statusMessage) => (dispatch) => {
     profileAPI.setProfileStatus(statusMessage).then((response) => {
         if (response.data.resultCode === 0) dispatch(setUserStatus(statusMessage));
     });
+}
+export const uploadPhoto = (photoFile) => async (dispatch) => {
+    const response = await profileAPI.uploadPhoto(photoFile)
+    if (response.data.resultCode === 0) dispatch(setUserPhotos(response.data.data.photos));
 }
 export const updateTextAreaAction = (postText) =>
     ({type: UPDATE_TEXT_AREA, newText: postText});

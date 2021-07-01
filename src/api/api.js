@@ -33,6 +33,11 @@ export const profileAPI = {
     },
     getProfileStatus(userId) {
         return instance.get(`/profile/status/${userId}`);
+    },
+    uploadPhoto(photoFile) {
+        const formData = new FormData();
+        formData.append('image', photoFile)
+        return instance.put(`/profile/photo/`,formData);
     }
 }
 
