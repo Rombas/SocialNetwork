@@ -1,6 +1,14 @@
+import { IdInfoType } from "../type/types";
+
 const ADD_MESSAGE = 'ADD-MESSAGE';
 const UPDATE_MESSAGE_AREA = 'UPDATE-MESSAGE-AREA';
 
+export type MessagesType = {
+    id: number
+    message: string
+}
+
+export type InitialStateType = typeof initialState
 let initialState = {
     newMessageText: 'enter',
     messages: [
@@ -10,7 +18,7 @@ let initialState = {
         {id: 4, message: 'Piotr'},
         {id: 5, message: 'Roman'},
         {id: 6, message: 'Helga'},
-    ],
+    ] as Array<MessagesType>,
     dialogs: [
         {
             id: 1,
@@ -42,10 +50,10 @@ let initialState = {
             name: 'Helga',
             avatar: 'https://cdn.vox-cdn.com/thumbor/8h7ipgJo5zr-bTF-RLqjSuzz2Q0=/1400x1400/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/9410113/MTS_simgazer_1589392_Helga.jpg'
         },
-    ]
+    ] as Array<IdInfoType>
 };
 
-const dialogsReducer = (state = initialState, action) => {
+const dialogsReducer = (state = initialState, action: any): InitialStateType => {
     switch (action.type) {
         case ADD_MESSAGE:
             const newMessage = {
@@ -66,9 +74,16 @@ const dialogsReducer = (state = initialState, action) => {
             return state;
     }
 }
-
-export const addMessageAction = (message) => ({type: ADD_MESSAGE, message});
-export const updateMessageAreaAction = (newMessage) =>
+type AddMessageActionActionType = {
+    type: typeof ADD_MESSAGE
+    message: string
+}
+export const addMessageAction = (message: string): AddMessageActionActionType => ({type: ADD_MESSAGE, message});
+type UpdateMessageAreaActionType = {
+    type: typeof UPDATE_MESSAGE_AREA
+    newText: string
+}
+export const updateMessageAreaAction = (newMessage: string): UpdateMessageAreaActionType =>
     ({type: UPDATE_MESSAGE_AREA, newText: newMessage});
 
 export default dialogsReducer;

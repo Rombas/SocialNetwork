@@ -1,3 +1,7 @@
+import {IdInfoType} from "../type/types";
+
+export type InitialStateType = typeof initialState
+
 let initialState = {
     friends: [
         {
@@ -15,11 +19,11 @@ let initialState = {
             name: 'Sasha',
             avatar: 'https://img.championat.com/c/900x900/news/big/o/l/sasha-grej-provela-strim-v-obraze-princessy-lei-iz-zvjozdnyh-vojn_1588866382278634836.jpg'
         }
-    ]
+    ] as Array<IdInfoType>
 };
 
-const navbarReducer = (state = initialState, action) => {
+const navbarReducer = (state = initialState, action: any): InitialStateType => {
     return state;
 }
 
-export default navbarReducer;
+export default navbarReducer
