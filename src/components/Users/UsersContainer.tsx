@@ -17,12 +17,37 @@ import {
     getPageSize, getPortionSize,
     getUsersCount, getUsersFilter,
 } from "../../redux/users-selectors";
+import {UsersType} from "../../type/types";
+import {ReduxStateType} from "../../redux/redux-store";
 
-class UsersClassContainer extends React.Component {
+type MapStateToPropsType = {
+    users: Array<UsersType>
+    pageSize: number,
+    usersCount: number,
+    currentPage: number,
+    isFetching: boolean,
+    portionSize: number
+    followingToggleList: Array<number>,
+    isAuth: boolean,
+}
+type MapDispatchToPropsType = {
+    follow: (userId: number) => void,
+    setCurrentPage: (currentPage: number) => void,
+    setUsers: (users: UsersType) => void,
+    setUsersCount: (count: number) => void,
+    toggleIsFetching: (isFetching: boolean) => void,
+    toggleIsFollowing: (isFollowing: boolean, userID: number) => void,
+    unfollow: (userId: number) => void,
+    getUsers: (pageSize: number) => void,
+}
+type PropsType = MapStateToPropsType & MapDispatchToPropsType
+
+class UsersClassContainer extends React.Component<PropsType> {
 
     componentDidMount() {
         this.props.getUsers(this.props.pageSize);
     }
+
     render() {
         return <>
             {this.props.isFetching ? <Preloader/> : null}
@@ -43,7 +68,7 @@ class UsersClassContainer extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: ReduxStateType) => {
     return {
         users: getUsersFilter(state),
         pageSize: getPageSize(state),
@@ -56,8 +81,9 @@ const mapStateToProps = (state) => {
     }
 }
 
+//TStateProps = {}, TDispatchProps = {}, TOwnProps = {}, State
 
-const UsersContainer = connect(mapStateToProps, {
+const UsersContainer = connect<MapStateToPropsType, MapDispatchToPropsType, {}, ReduxStateType>(mapStateToProps, {
     follow,
     setCurrentPage,
     setUsers,

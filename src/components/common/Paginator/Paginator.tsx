@@ -1,7 +1,16 @@
 import styles from "../../Users/Users.module.css";
 import React, {useState} from "react";
 
-const Paginator = ({itemsCount, pageSize, currentPage, getUsers, portionSize}) => {
+type PropsType = {
+    itemsCount: number
+    pageSize: number
+    currentPage: number
+    getUsers: (pageSize: number, page: number) => void
+    portionSize: number
+}
+
+
+const Paginator: React.FC<PropsType> = ({itemsCount, pageSize, currentPage, getUsers, portionSize}) => {
     let pagesCount = Math.ceil(itemsCount / pageSize)
     let portionsCount = Math.ceil(pagesCount / portionSize)
     let [numberOfDisplayPortion, setNumberOfDisplayPortion] = useState(1)
@@ -19,7 +28,7 @@ const Paginator = ({itemsCount, pageSize, currentPage, getUsers, portionSize}) =
             </button>}
             {
                 pages.map((page) => {
-                    return <span key={page} className={page === currentPage ? styles.current : null}
+                    return <span key={page} className={page === currentPage ? styles.current : undefined}
                                  onClick={() => {
                                      getUsers(pageSize, page)
                                  }}>

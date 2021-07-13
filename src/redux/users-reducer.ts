@@ -1,5 +1,5 @@
 import {followAPI, userAPI} from "../api/api";
-import {PhotosType} from "../type/types";
+import {PhotosType, UsersType} from "../type/types";
 
 const SET_USERS = 'SET-USERS';
 const FOLLOW = 'FOLLOW';
@@ -10,13 +10,7 @@ const TOGGLE_IS_FETCHING = 'TOGGLE-IS-FETCHING';
 const TOGGLE_IS_FOLLOWING = 'TOGGLE-IS-FOLLOWING';
 
 type InitialStateType = typeof initialState
-type UsersType = {
-    id: number
-    name: string
-    status: string
-    photos: PhotosType
-    followed: boolean
-}
+
 let initialState = {
     users: [] as Array<UsersType>,
     usersCount: 30,

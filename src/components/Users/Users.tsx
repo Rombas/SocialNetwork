@@ -3,8 +3,23 @@ import styles from './Users.module.css';
 import userPhoto from "../../assets/images/images.png"
 import {NavLink} from "react-router-dom";
 import Paginator from "../common/Paginator/Paginator";
+import { UsersType } from "../../type/types";
 
-let Users = (props) => {
+type PropsType = {
+    usersCount: number,
+    pageSize: number,
+    currentPage: number,
+    users: Array<UsersType>
+    unfollow: (userId: number) => void,
+    follow: (userId: number) => void,
+    getUsers: (pageSize: number) => void,
+    toggleIsFollowing: (isFollowing: boolean, userID: number) => void,
+    followingToggleList: Array<number>,
+    isAuth: boolean,
+    portionSize: number
+}
+
+let Users: React.FC<PropsType> = (props) => {
     let pagesCount = Math.ceil(props.usersCount / props.pageSize)
     let pages = [];
     for (let i = 1; i <= pagesCount; i++) {
