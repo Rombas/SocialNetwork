@@ -1,5 +1,7 @@
 import {userAPI} from "../api/api";
-import {setAuthLoginInfo} from "./auth-reducer";
+import {setAuthLoginInfo, SetAuthLoginInfoActionType} from "./auth-reducer";
+import {ThunkAction} from "redux-thunk";
+import {ReduxStateType} from "./redux-store";
 
 const SET_INITIALIZED_STATUS = 'SET-INITIALIZED-STATUS';
 
@@ -11,11 +13,7 @@ let initialState: InitialStateType = {
     initializedStatus: false
 };
 
-type action = {
-    type: string
-}
-
-const appReducer = (state = initialState, action: any): InitialStateType => {
+const appReducer = (state = initialState, action: ActionTypes): InitialStateType => {
     switch (action.type) {
         case SET_INITIALIZED_STATUS: {
             return {
@@ -27,19 +25,23 @@ const appReducer = (state = initialState, action: any): InitialStateType => {
             return state;
     }
 }
-
+type ActionTypes = SetInitializedStatusType | SetAuthLoginInfoActionType
 type SetInitializedStatusType = {
     type: typeof SET_INITIALIZED_STATUS //SET-INITIALIZED-STATUS
 }
 export const setInitializedStatus = (): SetInitializedStatusType => ({type: SET_INITIALIZED_STATUS});
-export const isInitialized = () => (dispatch: any) => {
+
+type ThunkActionType = ThunkAction<void, ReduxStateType, unknown, ActionTypes>
+export const isInitialized = (): ThunkActionType => (dispatch) => {
     userAPI.me().then((response: any) => {
         if (response.data.resultCode === 0) {
             let {id, email, login} = response.data.data;
             dispatch(setAuthLoginInfo(id, email, login, true));
 
         }
-    }).then(() => {dispatch(setInitializedStatus())});
+    }).then(() => {
+        dispatch(setInitializedStatus())
+    });
 }
 
 export default appReducer;

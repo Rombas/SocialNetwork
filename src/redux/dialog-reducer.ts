@@ -53,7 +53,7 @@ let initialState = {
     ] as Array<IdInfoType>
 };
 
-const dialogsReducer = (state = initialState, action: any): InitialStateType => {
+const dialogsReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
     switch (action.type) {
         case ADD_MESSAGE:
             const newMessage = {
@@ -74,11 +74,14 @@ const dialogsReducer = (state = initialState, action: any): InitialStateType => 
             return state;
     }
 }
+
+type ActionsTypes = AddMessageActionActionType | UpdateMessageAreaActionType
 type AddMessageActionActionType = {
     type: typeof ADD_MESSAGE
     message: string
 }
 export const addMessageAction = (message: string): AddMessageActionActionType => ({type: ADD_MESSAGE, message});
+
 type UpdateMessageAreaActionType = {
     type: typeof UPDATE_MESSAGE_AREA
     newText: string
