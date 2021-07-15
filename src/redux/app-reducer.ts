@@ -1,4 +1,4 @@
-import {userAPI} from "../api/api";
+import {authAPI} from "../api/api";
 import {setAuthLoginInfo, SetAuthLoginInfoActionType} from "./auth-reducer";
 import {ThunkAction} from "redux-thunk";
 import {ReduxStateType} from "./redux-store";
@@ -33,7 +33,7 @@ export const setInitializedStatus = (): SetInitializedStatusType => ({type: SET_
 
 type ThunkActionType = ThunkAction<void, ReduxStateType, unknown, ActionTypes>
 export const isInitialized = (): ThunkActionType => (dispatch) => {
-    userAPI.me().then((response: any) => {
+    authAPI.me().then((response: any) => {
         if (response.data.resultCode === 0) {
             let {id, email, login} = response.data.data;
             dispatch(setAuthLoginInfo(id, email, login, true));

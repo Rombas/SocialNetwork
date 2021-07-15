@@ -1,5 +1,4 @@
-import {profileAPI} from "../api/api";
-import {webcrypto} from "crypto";
+import {profileAPI, ResultCodeEnum} from "../api/api";
 import {PhotosType} from "../type/types";
 import {ThunkAction} from "redux-thunk";
 import {ReduxStateType} from "./redux-store";
@@ -28,7 +27,7 @@ type ContactsType = {
     mainLink: string
 }
 
-type ProfileType = {
+export type ProfileType = {
     userId: number
     lookingForAJob: boolean
     lookingForAJobDescription: string
@@ -132,22 +131,22 @@ export const updateTextAreaAction = (postText: string): UpdateTextAreaActionType
 type ThunkActionType = ThunkAction<void, ReduxStateType, unknown, ActionsTypes>
 
 export const getUserProfile = (userId: number): ThunkActionType => async (dispatch) => {
-    const response = await profileAPI.getProfile(userId)
-    dispatch(setUserProfile(response.data));
+    const data = await profileAPI.getProfile(userId)
+    dispatch(setUserProfile(data));
 }
 
 export const getUserStatus = (userId: number): ThunkActionType => async (dispatch) => {
-    const response = await profileAPI.getProfileStatus(userId)
-    dispatch(setUserStatus(response.data));
+    const data = await profileAPI.getProfileStatus(userId)
+    dispatch(setUserStatus(data));
 }
 
 export const updateUserStatus = (statusMessage: string): ThunkActionType => async (dispatch) => {
-    const response = profileAPI.setProfileStatus(statusMessage)
-    if (response.data.resultCode === 0) dispatch(setUserStatus(statusMessage));
+    const data = await profileAPI.setProfileStatus(statusMessage)
+    if (data.resultCode === ResultCodeEnum.success) dispatch(setUserStatus(statusMessage));
 }
 export const uploadPhoto = (photoFile: any): ThunkActionType => async (dispatch) => {
-    const response = await profileAPI.uploadPhoto(photoFile)
-    if (response.data.resultCode === 0) dispatch(setUserPhotos(response.data.data.photos));
+    const data = await profileAPI.uploadPhoto(photoFile)
+    if (data.resultCode === ResultCodeEnum.success) dispatch(setUserPhotos(data.data.photos));
 }
 
 

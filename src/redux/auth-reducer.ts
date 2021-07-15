@@ -1,4 +1,4 @@
-import {authAPI, userAPI} from "../api/api";
+import {authAPI, ResultCodeEnum} from "../api/api";
 import {stopSubmit} from "redux-form";
 import {ThunkAction} from "redux-thunk";
 import {ReduxStateType} from "./redux-store";
@@ -41,26 +41,26 @@ export const setAuthLoginInfo =
 type ThunkActionType = ThunkAction<void, ReduxStateType, unknown, ActionTypes>
 
 export const getAuthLoginInfo = (): ThunkActionType => async (dispatch) => {
-    const response = await userAPI.me()
-    if (response.data.resultCode === 0) {
-        let {id, email, login} = response.data.data;
+    const data = await authAPI.me()
+    if (data.resultCode === ResultCodeEnum.success) {
+        let {id, email, login} = data.data;
         dispatch(setAuthLoginInfo(id, email, login, true));
     }
 }
 export const authMeOnSite = (email: string, password: string, rememberMe: boolean): ThunkActionType =>
     async (dispatch) => {
-        const response = await authAPI.authLogin(email, password, rememberMe)
-        if (response.data.resultCode === 0) {
+        const data = await authAPI.authLogin(email, password, rememberMe)
+        if (data.resultCode === ResultCodeEnum.success) {
             dispatch(getAuthLoginInfo());
         } else {
             // @ts-ignore
-            dispatch(stopSubmit('login', {_error: response.data.messages}))
+            dispatch(stopSubmit('login', {_error: data.messages}))
         }
     }
 
 export const disAuthMeOnSite = (): ThunkActionType => async (dispatch) => {
-    const response = await authAPI.authLogOut()
-    if (response.data.resultCode === 0) {
+    const data = await authAPI.authLogOut()
+    if (data.resultCode === ResultCodeEnum.success) {
         dispatch(setAuthLoginInfo(null, null, null, false));
     }
 }
